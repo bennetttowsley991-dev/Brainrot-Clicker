@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+#ultimateRoot{font-family:system-ui,-apple-system,sans-serif;position:relative;z-index:999999;min-height:100vh;background:radial-gradient(circle at 50% -10%,#29375f,#090b12 55%,#030408);color:#fff;padding:20px}
+#ultimateRoot *{box-sizing:border-box}.uTop,.uHero,.uControls,.uTitle,.uGrid,.uFooter{max-width:1400px;margin-left:auto;margin-right:auto}.uTop{display:flex;justify-content:space-between;gap:16px;align-items:center}.uLogo{font-size:11px;letter-spacing:5px;opacity:.6}.uTop h1{margin:2px 0;font-size:30px}.uStats{display:flex;gap:8px;flex-wrap:wrap}.uStat{background:#121827;border:1px solid #28324c;border-radius:12px;padding:9px 12px}.uHero{text-align:center;margin-top:24px}.uResult{max-width:720px;min-height:350px;margin:auto;padding:18px;border:1px solid #303a58;border-radius:26px;background:#090d16;box-shadow:0 20px 70px #0009}.uResult img{height:220px;width:220px;object-fit:contain;display:block;margin:auto}.uResult h2{margin:5px 0;font-size:25px}.uResult p{margin:0;color:#a9b3cf}.uMystery{height:220px;display:grid;place-items:center;font-size:150px;color:#53607c}.uRoll{margin:18px auto 12px;width:min(620px,100%);padding:18px;border:0;border-radius:16px;background:linear-gradient(90deg,#ff42ce,#7369ff);color:#fff;font-size:21px;font-weight:900;cursor:pointer}.uBar{height:7px;background:#161c2a;border-radius:20px;overflow:hidden}.uBar i{display:block;height:100%;background:#7df6b1;width:0}.uHint{font-size:11px;color:#707b99;margin-top:7px}.uActions,.uControls{display:flex;gap:9px;margin-top:12px}.uBtn,.uControls input,.uControls select{background:#121827;color:#fff;border:1px solid #29334d;border-radius:11px;padding:10px 13px}.uControls input{flex:1}.uControls select{min-width:150px}.uTitle{display:flex;justify-content:space-between;align-items:end;margin-top:24px}.uTitle h2{margin:0}.uTitle span{color:#74809e;font-size:12px}.uGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:11px;margin-top:11px}.uCard{background:#0e1420;border:1px solid #252e45;border-radius:15px;padding:9px;min-height:215px}.uCard.locked{opacity:.58}.uPic{height:140px;background:#070a10;border-radius:11px;display:grid;place-items:center;overflow:hidden;margin-bottom:8px}.uPic img{height:100%;width:100%;object-fit:contain}.uFallback{font-size:58px;display:none}.uCard b{display:block;font-size:13px;line-height:1.2}.uCard small{display:block;color:#8f9ab7;margin-top:4px}.uCard em{display:block;font-style:normal;font-size:9px;margin-top:7px;color:#6c7692}.uCard.owned em{color:#7df6b1}.uFooter{padding:25px 0;color:#56617e;text-align:center;font-size:10px}
+@media(max-width:700px){#ultimateRoot{padding:11px}.uTop{display:block}.uStats{margin-top:10px}.uResult{min-height:290px}.uResult img{height:175px;width:175px}.uMystery{height:175px;font-size:115px}.uGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.uControls{flex-direction:column}}
+</style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tung Tung RNG ULTIMATE — Brainrot Collector</title>
+<style>
+:root{
+  --bg:#070812;--panel:#111426;--panel2:#171b31;--line:#2a3152;
+  --text:#f5f7ff;--muted:#9ca5c9;--accent:#8b5cf6;--accent2:#22d3ee;
+  --good:#34d399;--gold:#fbbf24;--danger:#fb7185;
+}
+*{box-sizing:border-box} body{margin:0;background:
+radial-gradient(circle at 15% 10%,#25104d 0,transparent 28%),
+radial-gradient(circle at 90% 5%,#063c50 0,transparent 25%),var(--bg);
+color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{max-width:1250px;margin:auto;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.logo{font-size:24px;font-weight:900;letter-spacing:-.8px}.logo span{color:var(--accent2)}
+.stats{display:flex;gap:10px;flex-wrap:wrap}.pill{background:#11162a;border:1px solid var(--line);border-radius:14px;padding:9px 13px;font-size:13px}
+.nav{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}.nav button,.filter{
+background:#101426;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:800}
+.nav button.active,.filter.active{background:linear-gradient(135deg,#7c3aed,#2563eb);border-color:transparent}
+.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.panel{background:linear-gradient(180deg,#12162a,#0e1120);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 60px #0007}
+.rollPanel{padding:28px;text-align:center;min-height:570px;display:flex;flex-direction:column;justify-content:center}
+.kicker{color:var(--accent2);font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(34px,5vw,62px);margin:8px 0 4px;line-height:.95}
+.subtitle{color:var(--muted);margin:0 auto 18px;max-width:550px}
+.result{min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.result img,.fallback{width:210px;height:210px;object-fit:contain;filter:drop-shadow(0 20px 25px #0009)}
+.fallback{display:grid;place-items:center;border-radius:32px;background:linear-gradient(135deg,#252b4d,#121628);border:1px solid #414b76;font-size:72px}
+.resultName{font-size:26px;font-weight:950;margin-top:12px}.chance{color:var(--gold);font-weight:800;margin-top:5px}
+.roll{margin-top:10px;border:0;border-radius:18px;padding:17px 44px;font-size:22px;font-weight:950;
+background:linear-gradient(135deg,#8b5cf6,#06b6d4);box-shadow:0 10px 30px #6d28d955}
+.roll:active{transform:translateY(2px)} .roll:disabled{opacity:.6}
+.hint{color:var(--muted);font-size:12px;margin-top:9px}
+.side{padding:20px}.sideHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.side h2{margin:0;font-size:18px}.search{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#090c18;color:white;outline:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;max-height:485px;overflow:auto;padding-right:4px}
+.card{background:#101528;border:1px solid #273052;border-radius:15px;padding:10px;text-align:center;min-width:0}
+.card img,.miniFallback{width:86px;height:86px;object-fit:contain}.miniFallback{display:grid;place-items:center;margin:auto;background:#191e35;border-radius:12px;font-size:30px}
+.cardName{font-size:12px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px}
+.cardChance{font-size:10px;color:var(--gold);margin-top:3px}.count{font-size:10px;color:var(--good);margin-top:2px}
+.locked{opacity:.55}.locked .miniFallback{filter:grayscale(1)}
+.section{margin-top:18px;padding:20px}.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.filters{display:flex;gap:7px;overflow:auto;padding:12px 0}.filter{white-space:nowrap;font-size:12px;padding:8px 11px}
+.fullgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.fullgrid .card img,.fullgrid .miniFallback{width:100%;height:105px}
+.empty{text-align:center;color:var(--muted);padding:35px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:#171c32;border:1px solid #3a4670;padding:12px 18px;border-radius:14px;font-weight:800;transition:.25s;z-index:5}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.fullgrid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){.app{padding:12px}.rollPanel{padding:18px}.grid{grid-template-columns:repeat(2,1fr)}.fullgrid{grid-template-columns:repeat(3,1fr)}.topbar{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="logo">TUNG TUNG <span>RNG</span> ⚡</div>
+    <div class="stats">
+      <div class="pill">Rolls: <b id="rolls">0</b></div>
+      <div class="pill">Collected: <b id="collected">0</b>/<b id="total">0</b></div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="active" onclick="showTab('roll',this)">🎲 Roll</button>
+    <button onclick="showTab('inventory',this)">🎒 Inventory</button>
+    <button onclick="showTab('index',this)">📖 Index</button>
+  </div>
+
+  <main id="rollTab">
+    <div class="layout">
+      <section class="panel rollPanel">
+        <div class="kicker">brainrot collector</div>
+        <h1>TUNG TUNG RNG</h1>
+        <p class="subtitle">Roll the most questionable creatures ever assembled. Can you hit the secret?</p>
+        <div class="result" id="result"></div>
+        <button class="roll" id="rollBtn" onclick="roll()">ROLL 🎲</button>
+        <div class="hint">The Secret Tung Tung is 1 in 7,000,000,000,000,000.</div>
+      </section>
+      <aside class="panel side">
+        <div class="sideHead"><h2>🔥 Recent Rolls</h2><span class="pill" id="recentCount">0</span></div>
+        <div id="recent" class="grid"></div>
+      </aside>
+    </div>
+  </main>
+
+  <main id="inventoryTab" style="display:none">
+    <section class="panel section">
+      <div class="sectionTitle"><h2>🎒 Your Collection</h2><span class="pill" id="invPct">0%</span></div>
+      <div class="filters" id="invFilters"></div>
+      <div class="fullgrid" id="inventory"></div>
+    </section>
+  </main>
+
+  <main id="indexTab" style="display:none">
+    <section class="panel section">
+      <div class="sectionTitle"><h2>📖 Brainrot Index</h2><span class="pill" id="indexCount"></span></div>
+      <input class="search" id="search" placeholder="Search brainrots..." oninput="renderIndex()">
+      <div class="filters" id="indexFilters"></div>
+      <div class="fullgrid" id="index"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const imgBase='https://brainrotcharacters.net/wp-content/uploads/';
+const known={
+"Tralalero Tralala":"Tralalero-Tralala-Sticker-Transparent-PNG.webp",
+"Chimpanzini Bananini":"2026/04/Chimpanzini-Bananini-Banana-Beast-in-Unpeeled-Fury-mode-768x768.webp",
+"Lirili Larila":"Lirili-Larila-Sticker-Transparent-PNG.webp",
+"Tung Tung Tung Sahur":"2026/04/Tung-Tung-Tung-Sahur-Official-Italian-Brainrot-Character-768x768.webp"
+};
+
+const extraNames=[
+"Cappuccino Assassino","Bombardino Crocodilo","Bananita Dolfinita","Carrotino Rabbiti","Teatrino Sbaglino",
+"Cukababra","Homeworkini Skoolini","Ta Ta Ta Sahur","Strawberry Elephant","Pizza Pepperonini",
+"Chick Fil A Pollonero","Chipotle Burritino","Mcdonalds Hamburguerini Payasito","Tor Mai Ke Chodo",
+"Barbie Bambola Cabriolettina","Snake Serpentini Bananini","Orcalero Orcala","Trippi Troppi","Los Tralaleritos",
+"Dolpalero Dalfala","Bombombini Gusini","Nuclearo Dinossauro","Ballerina Cappuccina","Sneaknoggin",
+"Spaghettino Malfunziono","Mozzarello Confusione","Espressona Signora","Odin Din Din Dun","Glorbo Fruttodrillo",
+"Rhino Toasterino","Piccione Macchina","Gangster Footera","Puppachini Assasini","To To To Sahur",
+"Strawberry Nexo","Clintino Gran Torino Pellegrino","Guitardando Explosivo","Nicotino Cappuccino","Felino Burgerino",
+"Bella Ballerina","Frigo Camelo","Bobrito Bandito","La Vaca Saturno Saturnita","Taco Bell Campaniro",
+"Lasagnito Pup","Coca-Colino Frizzelino","Sphinxelino Rockelino","Cucumber Hammerino","Cheese Rattatino",
+"Boneca Ambalabu","Girafa Celestre","Trulimero Trulicina","Ti Ti Ti Sahur","Nooo My Hotspot",
+"Las Tralaleritas","Dragon Cannelloni","Trulimero Trulichina","Tang Tang Kelentang","Static Scientist",
+"Michelino Caralinho","Pliosauri Portaeri","Paniniona Ballerina","Maxino Jessinichino","Grammeriso Faboluso",
+"Turtleini Violini","Tlang Tlang Tlang Sahur","Zolkino Newspaperino","Peepee Cacanini","Mogini Jawlinini",
+"Computerrandoloni","Yappuccino","Nooo La Polizia","Legito Friggito","Lobsterino Mascottino",
+"Toiletino Poopito","Burning Ice"
+];
+
+const rarityNames=["Common","Uncommon","Rare","Epic","Legendary","Mythic","Brainrot God","Secret"];
+function fallback(name,small=false){
+  const emoji=["🦈","🍌","☕","🐊","🧌","🍕","🦍","🦑","🧀","🦖","🥤","🤖"][hash(name)%12];
+  return `<div class="${small?'miniFallback':'fallback'}">${emoji}</div>`;
+}
+function hash(s){let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
+function slugFile(name){
+  return imgBase+name.replaceAll(" ","-").replaceAll("’","").replaceAll("'","")+".webp";
+}
+function imageHTML(c,small=false){
+  const src=known[c.name] || slugFile(c.name);
+  return `<img src="${src}" alt="${c.name}" onerror="this.outerHTML=fallback('${c.name}',${small})">`;
+}
+function makeChance(i){
+  if(i===0)return "1 in 3";
+  if(i===1)return "1 in 5";
+  if(i===2)return "1 in 10";
+  if(i===3)return "1 in 20";
+  if(i===4)return "1 in 50";
+  if(i===5)return "1 in 100";
+  if(i===6)return "1 in 250";
+  if(i===7)return "1 in 500";
+  if(i===8)return "1 in 1,000";
+  if(i===9)return "1 in 2,500";
+  if(i===10)return "1 in 5,000";
+  if(i===11)return "1 in 10,000";
+  if(i===12)return "1 in 25,000";
+  if(i===13)return "1 in 50,000";
+  if(i===14)return "1 in 100,000";
+  if(i===15)return "1 in 250,000";
+  return "1 in "+(500000+i*50000).toLocaleString();
+}
+const names=["Tralalero Tralala","Chimpanzini Bananini","Lirili Larila","Brr Brr Patapim","Tung Tung Tung Sahur",
+...extraNames.filter(x=>!["Tralalero Tralala","Chimpanzini Bananini","Lirili Larila","Tung Tung Tung Sahur"].includes(x))];
+const unique=[...new Set(names)];
+const chars=unique.map((name,i)=>({name,chance:i===unique.length-1?"1 in 7,000,000,000,000,000":makeChance(i), rarity:i>70?"Legendary":rarityNames[Math.min(7,Math.floor(i/12))], owned:0}));
+chars.find(c=>c.name==="Tung Tung Tung Sahur").chance="1 in 100,000";
+chars[chars.length-1].name="SECRET TUNG TUNG SAHUR";
+chars[chars.length-1].chance="1 in 7,000,000,000,000,000";
+chars[chars.length-1].rarity="Secret";
+known["SECRET TUNG TUNG SAHUR"]=known["Tung Tung Tung Sahur"];
+
+let rolls=Number(localStorage.getItem("tungRolls")||0);
+let owned=JSON.parse(localStorage.getItem("tungOwned")||"{}");
+let recent=JSON.parse(localStorage.getItem("tungRecent")||"[]");
+let filter="All";
+
+function save(){localStorage.setItem("tungRolls",rolls);localStorage.setItem("tungOwned",JSON.stringify(owned));localStorage.setItem("tungRecent",JSON.stringify(recent))}
+function updateStats(){
+  document.getElementById("rolls").textContent=rolls;
+  const got=Object.keys(owned).filter(k=>owned[k]>0).length;
+  document.getElementById("collected").textContent=got;document.getElementById("total").textContent=chars.length;
+  document.getElementById("invPct").textContent=Math.round(got/chars.length*100)+"%";
+}
+function chanceRoll(){
+  const r=Math.random();
+  if(r<1/7000000000000000)return chars.length-1;
+  if(r<0.00001)return chars.findIndex(c=>c.name==="Tung Tung Tung Sahur");
+  const weights=chars.map((_,i)=>1/(3+i*1.8));
+  let sum=weights.reduce((a,b)=>a+b,0),x=Math.random()*sum;
+  for(let i=0;i<weights.length;i++){x-=weights[i];if(x<=0)return i}
+  return 0;
+}
+function roll(){
+  const btn=document.getElementById("rollBtn");btn.disabled=true;
+  const idx=chanceRoll(),c=chars[idx];rolls++;owned[c.name]=(owned[c.name]||0)+1;
+  recent.unshift(c.name);recent=recent.slice(0,6);save();
+  const special=c.rarity==="Secret"||c.name==="Tung Tung Tung Sahur";
+  document.getElementById("result").innerHTML=`${imageHTML(c)}<div class="resultName">${c.name}</div><div class="chance">Chance: ${c.chance}</div><div class="chance">${c.rarity}</div>`;
+  updateStats();renderRecent();renderInventory();renderIndex();
+  if(special) toast("🚨 RARE ROLL: "+c.name+" 🚨"); else toast("Rolled "+c.name);
+  setTimeout(()=>btn.disabled=false,450);
+}
+function card(c,lock=false){
+  return `<div class="card ${lock?'locked':''}">${lock?fallback("locked",true):imageHTML(c,true)}
+  <div class="cardName">${lock?"???":c.name}</div>
+  <div class="cardChance">${lock?"???":c.chance}</div>${!lock&&owned[c.name]?`<div class="count">×${owned[c.name]}</div>`:""}</div>`;
+}
+function renderRecent(){
+  document.getElementById("recentCount").textContent=recent.length;
+  document.getElementById("recent").innerHTML=recent.length?recent.map(n=>card(chars.find(c=>c.name===n))).join(""):'<div class="empty">Roll something!</div>';
+}
+function filterButtons(target){
+  const vals=["All","Common","Uncommon","Rare","Epic","Legendary","Mythic","Brainrot God","Secret"];
+  document.getElementById(target).innerHTML=vals.map(v=>`<button class="filter ${filter===v?'active':''}" onclick="setFilter('${v}')">${v}</button>`).join("");
+}
+function setFilter(v){filter=v;filterButtons("invFilters");filterButtons("indexFilters");renderInventory();renderIndex()}
+function filtered(){
+  return chars.filter(c=>filter==="All"||c.rarity===filter)
+}
+function renderInventory(){
+  filterButtons("invFilters");
+  const list=filtered().filter(c=>owned[c.name]);
+  document.getElementById("inventory").innerHTML=list.length?list.map(c=>card(c)).join(""):'<div class="empty" style="grid-column:1/-1">Nothing here yet. Start rolling! 🎲</div>';
+}
+function renderIndex(){
+  filterButtons("indexFilters");
+  const q=(document.getElementById("search")?.value||"").toLowerCase();
+  const list=filtered().filter(c=>c.name.toLowerCase().includes(q));
+  document.getElementById("indexCount").textContent=list.length+" shown / "+chars.length+" total";
+  document.getElementById("index").innerHTML=list.map(c=>card(c,!owned[c.name])).join("");
+}
+function showTab(tab,btn){
+  ["roll","inventory","index"].forEach(x=>document.getElementById(x+"Tab").style.display=x===tab?"block":"none");
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");
+  if(tab==="inventory")renderInventory();if(tab==="index")renderIndex();
+}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),1800)}
+document.getElementById("result").innerHTML=`<div class="fallback">🎲</div><div class="resultName">Ready?</div><div class="chance">Your next brainrot is waiting.</div>`;
+updateStats();renderRecent();renderInventory();renderIndex();
+</script>
+
+<script>
+const U_ROSTER=[">\n<head>\n<meta charset=", ">\n<meta name=", " content=", "app", "topbar", "logo", "stats", "pill", "rolls", "collected", "total", "nav", "active", "showTab('roll',this)", "showTab('inventory',this)", "showTab('index',this)", "rollTab", "layout", "panel rollPanel", "kicker", "subtitle", "result", "roll", "rollBtn", "roll()", "hint", "panel side", "sideHead", "recentCount", "recent", "grid", "inventoryTab", "display:none", "panel section", "sectionTitle", "invPct", "filters", "invFilters", "fullgrid", "inventory", "indexTab", "indexCount", "search", "Search brainrots...", "renderIndex()", "indexFilters", "index", "toast", "Tralalero Tralala", "Tralalero-Tralala-Sticker-Transparent-PNG.webp", "Chimpanzini Bananini", "Lirili Larila", "Lirili-Larila-Sticker-Transparent-PNG.webp", "Tung Tung Tung Sahur", "\n};\n\nconst extraNames=[\n", "Bombardino Crocodilo", "Bananita Dolfinita", "Carrotino Rabbiti", "Teatrino Sbaglino", "Cukababra", "Homeworkini Skoolini", "Ta Ta Ta Sahur", "Strawberry Elephant", "Pizza Pepperonini", "Chick Fil A Pollonero", "Chipotle Burritino", "Mcdonalds Hamburguerini Payasito", "Tor Mai Ke Chodo", "Barbie Bambola Cabriolettina", "Snake Serpentini Bananini", "Orcalero Orcala", "Trippi Troppi", "Los Tralaleritos", "Dolpalero Dalfala", "Bombombini Gusini", "Nuclearo Dinossauro", "Ballerina Cappuccina", "Sneaknoggin", "Spaghettino Malfunziono", "Mozzarello Confusione", "Espressona Signora", "Odin Din Din Dun", "Glorbo Fruttodrillo", "Rhino Toasterino", "Piccione Macchina", "Gangster Footera", "Puppachini Assasini", "To To To Sahur", "Strawberry Nexo", "Clintino Gran Torino Pellegrino", "Guitardando Explosivo", "Nicotino Cappuccino", "Felino Burgerino", "Bella Ballerina", "Frigo Camelo", "Bobrito Bandito", "La Vaca Saturno Saturnita", "Taco Bell Campaniro", "Lasagnito Pup", "Coca-Colino Frizzelino", "Sphinxelino Rockelino", "Cucumber Hammerino", "Cheese Rattatino", "Boneca Ambalabu", "Girafa Celestre", "Trulimero Trulicina", "Ti Ti Ti Sahur", "Nooo My Hotspot", "Las Tralaleritas", "Dragon Cannelloni", "Trulimero Trulichina", "Tang Tang Kelentang", "Static Scientist", "Michelino Caralinho", "Pliosauri Portaeri", "Paniniona Ballerina", "Maxino Jessinichino", "Grammeriso Faboluso", "Turtleini Violini", "Tlang Tlang Tlang Sahur", "Zolkino Newspaperino", "Peepee Cacanini", "Mogini Jawlinini", "Computerrandoloni", "Yappuccino", "Nooo La Polizia", "Legito Friggito", "Lobsterino Mascottino", "Toiletino Poopito", "Burning Ice", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic", "Brainrot God", "Secret", "][hash(name)%12];\n  return `<div class=", ").replaceAll(", ".webp", "${src}", "${c.name}", "this.outerHTML=fallback('${c.name}',${small})", "1 in 3", "1 in 5", "1 in 10", "1 in 20", "1 in 50", "1 in 100", "1 in 250", "1 in 500", "1 in 1,000", "1 in 2,500", "1 in 5,000", "1 in 10,000", "1 in 25,000", "1 in 50,000", "1 in 100,000", "1 in 250,000", "1 in ", "Brr Brr Patapim", "1 in 7,000,000,000,000,000", "SECRET TUNG TUNG SAHUR", "tungRolls", "tungOwned", ");\nlet recent=JSON.parse(localStorage.getItem(", ")||", ");\nlet filter=", ",rolls);localStorage.setItem(", ",JSON.stringify(owned));localStorage.setItem(", "resultName", "chance", "🚨 RARE ROLL: ", "); else toast(", "card ${lock?'locked':''}", "locked", "cardName", "???", "cardChance", "count", "):'<div class=", "All", "filter ${filter===v?'active':''}", "setFilter('${v}')", ");filterButtons(", " style=", " shown / ", " total", "Tab", "block", "none", ".nav button", "show", "fallback", "Cocofanto Elefanto", "Brr Es Teh Patipum", "67", "La Secret Combination", "La Grande Combination", "La Sahur Combination", "Skibidi Toilet", "Los Orcalitos", "Gattino Hydrantino", "Raccooni Jandelini", "Blackhole Goat", "Los Bombinitos", "Pakrahmatmamat", "Bisonte Giuppitere", "Tigrilini Watermelini", "Frulli Frulla", "Zibra Zubra Zibralini", "Tob Tobi Tob", "Pot Hotspot", "Te Te Te Sahur", "Job Job Job Sahur", "Graipussi Medussi", "Esok Sekolah", "Los Secret Combinasionas", "Celestial Pegasus", "La Karkerkar Combinasion", "Tracotucotulu Delapeladustuz", "Garama and Madungdung", "Chicleteirina Bicicleteirina", "Burbaloni Luliloli", "Tukanno Bananno", "Lirilì Larilà", "Merdardo", "Gattino Aereoplanino", "Los Combinasionas", "La Supreme Combinasion", "La Craft Machine", "Tralalero Tralala Baby", "Tung Tung Tung Sahur Baby", "Bombardino Crocodilo Baby", "Chimpanzini Bananini Baby", "Cappuccino Assassino Baby", "Ballerina Cappuccina Baby", "Strawberry Elephant Baby", "Brr Brr Patapim Baby", "Frigo Camelo Baby", "Bobrito Bandito Baby", "Orcalero Orcala Baby", "Boneca Ambalabu Baby", "Girafa Celestre Baby", "Nuclearo Dinossauro Baby", "Espressona Signora Baby", "Odin Din Din Dun Baby", "Glorbo Fruttodrillo Baby", "Rhino Toasterino Baby"];
+const U_KNOWN={"Tralalero Tralala": "https://brainrotcharacters.net/wp-content/uploads/2026/04/Tralalero-Tralala-Official-Italian-Brainrot-Character-Shark-Meme-768x768.webp", "Cappuccino Assassino": "https://brainrotcharacters.net/wp-content/uploads/2026/04/Cappuccino-Assassino-Official-Italian-Brainrot-Character-768x768.webp", "Bombardino Crocodilo": "https://brainrotcharacters.net/wp-content/uploads/2026/04/Bombardiro-Crocodilo-Official-Italian-Brainrot-Character-768x768.webp", "Chimpanzini Bananini": "https://brainrotcharacters.net/wp-content/uploads/2026/04/Chimpanzini-Bananini-Official-Italian-Brainrot-Character-768x768.webp", "Tung Tung Tung Sahur": "https://brainrotcharacters.net/wp-content/uploads/2026/04/Tung-Tung-Tung-Sahur-Official-Italian-Brainrot-Character-768x768.webp", "Bananita Dolfinita": "https://brainrotcharacters.net/wp-content/uploads/Bananita-Dolfinita-Official-Italian-Brainrot-Character-768x768.webp", "Frigo Camelo": "https://brainrotcharacters.net/wp-content/uploads/Frigo-Camelo-Official-Italian-Brainrot-Character-768x768.webp", "Bobrito Bandito": "https://brainrotcharacters.net/wp-content/uploads/Bobritto-Bandito-Official-Italian-Brainrot-Character-768x768.webp", "La Vaca Saturno Saturnita": "https://brainrotcharacters.net/wp-content/uploads/La-Vaca-Saturno-Saturnita-Official-Italian-Brainrot-Character-768x768.webp", "Brr Brr Patapim": "https://brainrotcharacters.net/wp-content/uploads/Brr-Brr-Patapim-Official-Italian-Brainrot-Character-768x768.webp", "Ta Ta Ta Sahur": "https://brainrotcharacters.net/wp-content/uploads/Ta-Ta-Ta-Sahur-Official-Italian-Brainrot-Character-768x768.webp", "Strawberry Elephant": "https://brainrotcharacters.net/wp-content/uploads/Elefantini-Strawberryni-Official-Italian-Brainrot-Character-768x768.webp", "Orcalero Orcala": "https://brainrotcharacters.net/wp-content/uploads/Orcalero-Orcala-Official-Italian-Brainrot-Character-768x768.webp", "Trippi Troppi": "https://brainrotcharacters.net/wp-content/uploads/Trippi-Troppi-Official-Italian-Brainrot-Character-768x768.webp", "Los Tralaleritos": "https://brainrotcharacters.net/wp-content/uploads/Los-Tralaleritos-Official-Italian-Brainrot-Character-768x768.webp", "Dolpalero Dalfala": "https://brainrotcharacters.net/wp-content/uploads/Dolpalero-Dalfala-Official-Italian-Brainrot-Character-768x768.webp", "Bombombini Gusini": "https://brainrotcharacters.net/wp-content/uploads/Bombombini-Gusini-Official-Italian-Brainrot-Character-768x768.webp", "Nuclearo Dinossauro": "https://brainrotcharacters.net/wp-content/uploads/Nuclearo-Dinossauro-Official-Italian-Brainrot-Character-768x768.webp", "Ballerina Cappuccina": "https://brainrotcharacters.net/wp-content/uploads/Ballerina-Cappuccina-Official-Italian-Brainrot-Character-768x768.webp", "Lirili Larila": "https://brainrotcharacters.net/wp-content/uploads/Lirili-Larila-Sticker-Transparent-PNG.webp", "Espressona Signora": "https://brainrotcharacters.net/wp-content/uploads/Espressona-Signora-Official-Italian-Brainrot-Character-768x768.webp", "Odin Din Din Dun": "https://brainrotcharacters.net/wp-content/uploads/Odin-Din-Din-Dun-Official-Italian-Brainrot-Character-768x768.webp", "Glorbo Fruttodrillo": "https://brainrotcharacters.net/wp-content/uploads/Glorbo-Fruttodrillo-Official-Italian-Brainrot-Character-768x768.webp", "Rhino Toasterino": "https://brainrotcharacters.net/wp-content/uploads/Rhino-Toasterino-Official-Italian-Brainrot-Character-768x768.webp", "Piccione Macchina": "https://brainrotcharacters.net/wp-content/uploads/Piccione-Macchina-Official-Italian-Brainrot-Character-768x768.webp", "Gangster Footera": "https://brainrotcharacters.net/wp-content/uploads/Gangster-Footera-Official-Italian-Brainrot-Character-768x768.webp", "Boneca Ambalabu": "https://brainrotcharacters.net/wp-content/uploads/Boneca-Ambalabu-Official-Italian-Brainrot-Character-768x768.webp", "Girafa Celestre": "https://brainrotcharacters.net/wp-content/uploads/Girafa-Celestre-Official-Italian-Brainrot-Character-768x768.webp", "Trulimero Trulicina": "https://brainrotcharacters.net/wp-content/uploads/Trulimero-Trulicina-Official-Italian-Brainrot-Character-768x768.webp", "Ti Ti Ti Sahur": "https://brainrotcharacters.net/wp-content/uploads/Ti-Ti-Ti-Sahur-Official-Italian-Brainrot-Character-768x768.webp", "Nooo My Hotspot": "https://brainrotcharacters.net/wp-content/uploads/Nooo-My-Hotspot-Official-Italian-Brainrot-Character-768x768.webp", "Cocofanto Elefanto": "https://brainrotcharacters.net/wp-content/uploads/Cocofanto-Elefanto-Official-Italian-Brainrot-Character-768x768.webp", "SECRET TUNG TUNG SAHUR": "https://brainrotcharacters.net/wp-content/uploads/2026/04/Tung-Tung-Tung-Sahur-Official-Italian-Brainrot-Character-768x768.webp"};
+const U_RARITIES=["All","Common","Uncommon","Rare","Epic","Legendary","Mythic","Secret","OG"];
+const U_EMOJI=["🧠","🦈","🐊","🍌","☕","🪵","🐘","🐬","🍕","🦖","🐸","🌈","👑","💀"];
+function uSlug(n){return n.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g,"-").replace(/^-|-$/g,"");}
+function uURL(n){if(U_KNOWN[n])return U_KNOWN[n];let b=uSlug(n.replace(/ (Baby|Golden|Rainbow|Mega)$/,""));return "https://brainrotcharacters.net/wp-content/uploads/"+b+"-Official-Italian-Brainrot-Character-768x768.webp";}
+function uRare(i){if(i>=245)return"OG";if(i>=230)return"Secret";if(i>=205)return"Mythic";if(i>=170)return"Legendary";if(i>=125)return"Epic";if(i>=75)return"Rare";if(i>=35)return"Uncommon";return"Common";}
+const U_REWARDS=U_ROSTER.map((n,i)=>({id:i,name:n,rarity:uRare(i),img:uURL(n),emoji:U_EMOJI[i%U_EMOJI.length]}));
+let U_STATE=JSON.parse(localStorage.getItem("tungUltimateState")||"null")||{coins:0,rolls:0,rebirths:0,owned:{},last:null};
+function uSave(){localStorage.setItem("tungUltimateState",JSON.stringify(U_STATE));}
+function uRender(){
+ let r=document.getElementById("ultimateRoot");if(!r)return;
+ document.getElementById("uCoins").textContent=U_STATE.coins.toLocaleString();
+ document.getElementById("uRolls").textContent=U_STATE.rolls.toLocaleString();
+ document.getElementById("uOwned").textContent=Object.keys(U_STATE.owned).length+"/"+U_REWARDS.length;
+ document.getElementById("uRebirths").textContent=U_STATE.rebirths;
+ document.getElementById("uProgress").style.width=(Object.keys(U_STATE.owned).length/U_REWARDS.length*100)+"%";
+ let x=U_STATE.last;
+ document.getElementById("uResult").innerHTML=x?`<img src="${x.img}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><div class="uFallback">${x.emoji}</div><h2>${x.name}</h2><p>${x.rarity} • ${uOdds(x)}</p>`:`<div class="uMystery">?</div><h2>READY TO ROLL</h2><p>Find your next brainrot</p>`;
+ let q=(document.getElementById("uSearch").value||"").toLowerCase(),f=document.getElementById("uFilter").value;
+ document.getElementById("uGrid").innerHTML=U_REWARDS.filter(x=>(!q||x.name.toLowerCase().includes(q))&&(f==="All"||x.rarity===f)).map(x=>`<div class="uCard ${U_STATE.owned[x.id]?"owned":"locked"}"><div class="uPic"><img src="${x.img}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="uFallback">${x.emoji}</span></div><b>${x.name}</b><small>${x.rarity}</small><em>${uOdds(x)}</em><em>${U_STATE.owned[x.id]?"UNLOCKED ×"+U_STATE.owned[x.id]:"LOCKED"}</em></div>`).join("");
+}
+
+const U_TOTAL=1000000000000000n;
+const U_SECRET_DEN=7000000000000000n;
+function uRandBelow(max){
+  const range=0x10000000000000000n;
+  const limit=range-(range%max);
+  const a=new Uint32Array(2);
+  while(true){
+    crypto.getRandomValues(a);
+    const x=(BigInt(a[0])<<32n)|BigInt(a[1]);
+    if(x<limit)return x%max;
+  }
+}
+function uPickWeighted(){
+  // Exact special tickets:
+  // Tung Tung Tung Sahur = 1 / 100,000.
+  // Secret Tung Tung Sahur = 1 / 7,000,000,000,000,000.
+  const secretChanceDen=7000000000000000n;
+  const secretRoll=uRandBelow(secretChanceDen);
+  if(secretRoll===0n){
+    return U_REWARDS.find(x=>x.name==="SECRET TUNG TUNG SAHUR") || U_REWARDS[U_REWARDS.length-1];
+  }
+  const tungChanceDen=100000n;
+  if(uRandBelow(tungChanceDen)===0n){
+    return U_REWARDS.find(x=>x.name==="Tung Tung Tung Sahur") || U_REWARDS[4];
+  }
+
+  // Normal rewards use rarity weights. The displayed "1 in X" is derived
+  // from the normalized weights of this pool, so it always matches the
+  // actual non-special roll probabilities.
+  const pool=U_REWARDS.filter(x=>x.name!=="Tung Tung Tung Sahur" && x.name!=="SECRET TUNG TUNG SAHUR");
+  const weights={Common:5000,Uncommon:1500,Rare:400,Epic:100,Legendary:25,Mythic:5,Secret:1,OG:1};
+  let total=0;
+  for(const x of pool) total+=weights[x.rarity]||1;
+  let n=Number(uRandBelow(BigInt(total)));
+  for(const x of pool){
+    n-=weights[x.rarity]||1;
+    if(n<0)return x;
+  }
+  return pool[0];
+}
+function uOdds(x){
+  if(x.name==="SECRET TUNG TUNG SAHUR")return "1 in 7,000,000,000,000,000";
+  if(x.name==="Tung Tung Tung Sahur")return "1 in 100,000";
+  const weights={Common:5000,Uncommon:1500,Rare:400,Epic:100,Legendary:25,Mythic:5,Secret:1,OG:1};
+  const pool=U_REWARDS.filter(y=>y.name!=="Tung Tung Tung Sahur"&&y.name!=="SECRET TUNG TUNG SAHUR");
+  const total=pool.reduce((a,y)=>a+(weights[y.rarity]||1),0);
+  const w=weights[x.rarity]||1;
+  return "1 in "+Math.max(1,Math.round(total/w));
+}
+
+function uRoll(){
+  let x=uPickWeighted();
+  U_STATE.rolls++;
+  U_STATE.coins+=1;
+  U_STATE.owned[x.id]=(U_STATE.owned[x.id]||0)+1;
+  U_STATE.last=x;
+  uSave();uRender();
+}
+
+document.addEventListener("DOMContentLoaded",uBoot);
+</script>
+</body>
+</html>
